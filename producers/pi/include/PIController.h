@@ -9,8 +9,6 @@
 #ifndef PI_Controller_H
 #define PI_Controller_H
 
-using namespace std;
-
 //#define
 
 class PI_Controller{
@@ -24,24 +22,32 @@ public:
 	/*------------------------functions for initialising the controller------------------------*/
 
 	/*to connect the C-863 via RS232, returns iD or some value <0 if failed. for BaudRate check manuel of the controller*/
-	int ConnectRS232();
+	int connectRS232();
 	/*reference the PI stage if needed*/
 	bool ReferenceIfNeeded();
+
+	int connectTCPIP(const char* hostname);
+
+	void closeConnection(std::string comment = "");
+
+	void reportError();
 
 	/*--------------------------functions for configuring the PI stage----------------------*/
 
 	/*move the stage to a certain position between 0 and 102*/
 	bool Move(const double position);
 
-	int MoveServeralSteps(const std::vector<double> positions);
+	int MoveServeralSteps(const std::vector<double> positions, int pauseTime);
 
 	bool isMoving();
+
+	double getPosition();
 
 	void pause(int miliseconds);
 
 	/*---------------------getter and setter functions----------------*/
 	
-	inline int getID(){
+	inline int getID() const{
 		return iD;
 	}
 
@@ -49,7 +55,7 @@ public:
 		iD = newID;
 	}
 
-	inline int getBaudRate(){
+	inline int getBaudRate() const{
 		return baudRate;
 	}
 
@@ -57,7 +63,7 @@ public:
 		baudRate = newBaudRate;
 	}
 
-	inline int getPortNumber(){
+	inline int getPortNumber() const{
 		return portNr;
 	}
 
@@ -65,7 +71,7 @@ public:
 		portNr = portNumber;
 	}
 	
-	inline char* getSzAxis(){
+	inline char* getSzAxis() const{
 		return szAxis;
 	}
 
@@ -79,4 +85,12 @@ private:
 	int portNr;
 	char* szAxis;
 };
+
+/*
+std::ostream& operator<<(std::ostream& os, const PI_Controller& controller) {
+	return os << " baudRate: " << controller.getBaudRate() << " ID: " << controller.getID() << " portnumber: " << controller.getPortNumber() << std::endl;
+	//<< " szAxis: " << controller.getSzAxis() << std::endl;
+}
+*/
+
 #endif

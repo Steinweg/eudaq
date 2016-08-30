@@ -41,8 +41,4 @@ optional_add_subdirectory(pybar)
 optional_add_subdirectory(example)
 optional_add_subdirectory(apixct)
 optional_add_subdirectory(clicpix)
-<<<<<<< HEAD
 optional_add_subdirectory(ccpdlf)
-=======
-optional_add_subdirectory(ccpdlf)
->>>>>>> 68a8921fec5414aef4bb04a7f949e9a216ec4f66
